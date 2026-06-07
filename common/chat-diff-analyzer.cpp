@@ -400,7 +400,7 @@ std::string autoparser::detect_user_start_marker(const common_chat_template & tm
 
     auto candidate = usermsg.substr(0, usermsg.find(USER_MSG));
     auto candidate_split = segmentize_markers(candidate);
-    std::stringstream result;
+    std::string result;
     bool encountered_marker = false;
     for (const auto & mrk : candidate_split) {
         std::string lower_mrk = std::string(mrk.value);
@@ -415,9 +415,9 @@ std::string autoparser::detect_user_start_marker(const common_chat_template & tm
             continue;
         }
         encountered_marker |= mrk.type == segment_type::MARKER;
-        result << mrk.value;
+        result += mrk.value;
     }
-    return trim_whitespace(result.str());
+    return trim_whitespace(result);
 }
 
 analyze_reasoning::analyze_reasoning(const common_chat_template & tmpl, bool supports_tools)
